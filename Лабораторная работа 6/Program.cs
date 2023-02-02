@@ -7,33 +7,34 @@ using System.Threading.Tasks;
 
 namespace Лабораторная_работа_6
 {
+    // Метод находит среднее арифметическое элементов 
+    //матрицы случайных чисел
+    //Два параметра: размер матрицы
     public class MyThread
     {
-        private int N;
-        public MyThread(int n)
+        private int a,b;
+        public MyThread(int pa, int pb)
         {
-            this.N = n;
+            this.a = pa;
+            this.b = pb;
         }
         public void ThreadMain()
         {
-            int[] mas = new int[N];
+            int[,] matrix = new int[a,b];
             Random rnd = new Random();
-            List<int> result = new List<int>();
-            for (int i=0; i<mas.Length; i++)
+            double mid=0;
+            for (int i=0; i<a; i++)
             {
-                mas[i] = rnd.Next(1000);
-                if (mas[i] % 6 == 0) result.Add(mas[i]);
-                Console.Write(mas[i] + "   ");
-            }
-            if (result != null)
-            {
-                Console.WriteLine(" \n Полученное подмножество:");
-                for (int i = 0; i < result.Count; i++)
+                for (int j = 0; j < b; j++)
                 {
-                    Console.Write(result[i] + "   ");
+                    matrix[i, j] = rnd.Next(1000);
+                    Console.Write(matrix[i,j] + "   ");
+                    mid += Convert.ToDouble(matrix[i, j]);
                 }
+                Console.Write(" \n  ");
             }
-            else Console.WriteLine(" \n Элементов, кратных 6, нет");
+               Console.Write("Среднее арифметическое: {0}", mid/matrix.Length);          
+            
         }
     }
     class Program
@@ -55,7 +56,7 @@ namespace Лабораторная_работа_6
             //var d = new Data { Message = "Info" };
             //var t2 = new Thread(ThreadMainWithParameters);
             //t2.Start(d);
-            var obj = new MyThread(5);
+            var obj = new MyThread(5, 5);
             var t3 = new Thread(obj.ThreadMain);
             t3.Start();
 
